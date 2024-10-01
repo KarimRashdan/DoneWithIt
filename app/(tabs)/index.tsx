@@ -1,5 +1,4 @@
-/*import { Image, StyleSheet, Platform } from 'react-native';
-
+import { Image, StyleSheet, Platform } from 'react-native';
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
@@ -68,15 +67,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
 });
-*/
 
+/*
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Tracker</Text>
     </View>
   );
 }
@@ -89,3 +88,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+*/

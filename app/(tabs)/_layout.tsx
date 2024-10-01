@@ -32,6 +32,16 @@ export default function TabLayout() {
           ),
         }}
       />
+      {/* Adding the new Weight tab with a body or scale icon */}
+      <Tabs.Screen
+        name="weight"
+        options={{
+          title: 'Weight',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'scale' : 'scale-outline'} color={color} /> // For scale
+          ),
+        }}
+      />
     </Tabs>
   );
 }
