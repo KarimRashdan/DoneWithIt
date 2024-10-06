@@ -1,12 +1,119 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, ScrollView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // Ensure you have the icons installed
 
+export default function WeightScreen() {
+  const [weight, setWeight] = useState('');  //  initialize 'weight' with an empty string, 'weight' holds current input value, 'setWeight' will be called to update 'weight' 
+  const [isExpanded, setIsExpanded] = useState(false);  //  State for toggling expandable section
+
+  const logWeight = () => {
+    console.log('Logged weight: ${weight}');
+    setWeight('');  //  Reset input box to empty string 
+    Keyboard.dismiss();
+  };
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);  //  Toggle the expand/collapse state
+  };
+
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}  //  Adjust the behavior based on platform
+    >
+      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+      <Text style={styles.title}>Log Your Weight</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Enter weight in kg"
+        keyboardType="numeric"
+        returnKeyType="done"
+        value={weight}
+        onChangeText={setWeight}
+      />
+
+      {/* Button to log weight */}
+      <Button title="Log Weight" onPress={logWeight} />
+
+      {/* Expandable Section */}
+      <TouchableOpacity style={styles.expandableHeader} onPress={toggleExpand}>
+      <Text style={styles.expandableTitle}>More Weight Information</Text>
+      <Ionicons
+        name={isExpanded ? 'chevron-up-outline' : 'chevron-down-outline'} // Toggle arrow icon
+        size={20}
+        color="white"
+      />
+      </TouchableOpacity>
+
+    {isExpanded && (
+      <View style={styles.expandableContent}>
+        <Text style={styles.expandableText}>Here you can add more information about your weight tracking.</Text>
+        <Text style={styles.expandableText}>For example, track weight fluctuations, set weight goals, etc.</Text>
+      </View>
+    )}
+
+      </ScrollView>
+    </KeyboardAvoidingView> 
+  ); 
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    justifyContent: 'center',
+    backgroundColor: '#1c1c1e',
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#fff',
+  },
+  input: {
+    height: 50,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    color: '#fff',
+  },
+  expandableHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#333',
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  expandableTitle: {
+    fontSize: 16,
+    color: 'white',
+  },
+  expandableContent: {
+    backgroundColor: '#444',
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  expandableText: {
+    color: 'white',
+    marginBottom: 10,
+  },
+  scrollViewContainer: {
+    flexGrow: 1,  //  Allows content to grow and scroll
+    justifyContent: 'center',
+  },
+})
+
+/*
 interface WeightEntry {
   date: string;
   weight: number;
 }
-
 export default function WeightScreen() {
   const [weight, setWeight] = useState<string>(''); // Input weight as string
   const [loggedWeight, setLoggedWeight] = useState<number | null>(null); // Logged weight
@@ -58,6 +165,21 @@ export default function WeightScreen() {
     }
   };
 
+  // Function to remove a logged entry
+  const removeEntry = async (date: string) => {
+    try {
+      const updatedHistory = weightHistory.filter(entry => entry.date !== date);
+      setWeightHistory(updatedHistory); // Update the state
+
+      // Update AsyncStorage
+      await AsyncStorage.setItem('weightHistory', JSON.stringify(updatedHistory));
+
+      Alert.alert('Entry removed successfully');
+    } catch (error) {
+      Alert.alert('Failed to remove entry.');
+    }
+  };
+
   // Function to calculate the average weight change over the past week or month
   const calculateAverageChange = (): string => {
     if (weightHistory.length < 2) {
@@ -78,6 +200,16 @@ export default function WeightScreen() {
     }
     return 'Set a target weight to track progress.';
   };
+
+  // Render function for the logged entries
+  const renderEntry = ({ item }: { item: WeightEntry }) => (
+    <View style={styles.entryContainer}>
+      <Text style={styles.logged}>{item.date}: {item.weight} kg/lbs</Text>
+      <TouchableOpacity style={styles.deleteButton} onPress={() => removeEntry(item.date)}>
+        <Text style={styles.deleteText}>Delete</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
@@ -116,6 +248,15 @@ export default function WeightScreen() {
 
       <Text style={styles.title}>Average Weight Change</Text>
       <Text style={styles.logged}>{calculateAverageChange()} kg/lbs per day</Text>
+
+      <View style={styles.divider} />
+
+      <Text style={styles.title}>Logged Entries</Text>
+      <FlatList
+        data={weightHistory}
+        renderItem={renderEntry}
+        keyExtractor={item => item.date}
+      />
     </View>
   );
 }
@@ -153,4 +294,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#333',
     marginVertical: 20,
   },
+  entryContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+  },
+  deleteButton: {
+    backgroundColor: 'red',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 5,
+  },
+  deleteText: {
+    color: '#fff',
+  },
 });
+*/
