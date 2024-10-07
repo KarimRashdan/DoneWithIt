@@ -41,6 +41,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="onerepmax"
+        options={{
+          title: 'One Rep Max',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'calculator' : 'calculator-outline'} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
