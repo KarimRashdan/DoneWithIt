@@ -24,21 +24,20 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ),
-        }}
-      />
-      {/* Adding the new Weight tab with a body or scale icon */}
-      <Tabs.Screen
         name="weight"
         options={{
           title: 'Weight',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'scale' : 'scale-outline'} color={color} /> // For scale
+            <TabBarIcon name={focused ? 'barbell' : 'barbell-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="calories"
+        options={{
+          title: 'Calories',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'restaurant' : 'restaurant-outline'} color={color} />
           ),
         }}
       />
