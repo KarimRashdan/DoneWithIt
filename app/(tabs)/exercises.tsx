@@ -75,6 +75,13 @@ export default function ExercisesScreen() {
     }
   };
 
+  // Delete an exercise
+  const deleteExercise = (index: number) => {
+    const updatedExercises = exercises.filter((_, i) => i !== index); // Remove exercise by index
+    setExercises(updatedExercises);
+    saveExercises(updatedExercises); // Save the updated exercises list
+  };
+
   const toggleExpand = (index: number) => {
     setIsExpanded(isExpanded === index ? null : index); // Toggle expansion
   };
@@ -102,8 +109,8 @@ export default function ExercisesScreen() {
         {exercises.length > 0 ? (
           exercises.map((exercise, index) => (
             <View key={index} style={styles.exerciseContainer}>
-              {/* Expandable Exercise */}
-              <TouchableOpacity style={styles.expandableHeader} onPress={() => toggleExpand(index)}>
+              {/* Exercise Title with toggle to expand/collapse */}
+              <TouchableOpacity onPress={() => toggleExpand(index)} style={styles.expandableHeader}>
                 <Text style={styles.exerciseTitle}>{exercise.name}</Text>
                 <Ionicons
                   name={isExpanded === index ? 'chevron-up-outline' : 'chevron-down-outline'}
@@ -112,6 +119,7 @@ export default function ExercisesScreen() {
                 />
               </TouchableOpacity>
 
+              {/* Expandable content for logging sets */}
               {isExpanded === index && (
                 <View style={styles.expandableContent}>
                   {/* Log Reps */}
@@ -134,13 +142,21 @@ export default function ExercisesScreen() {
                     onChangeText={setWeight}
                     onSubmitEditing={() => addSet(index)} // Add set on "Done"
                   />
-                  
+
                   {/* Display logged sets */}
-                  {exercise.sets.map((set, i) => (
-                    <Text key={i} style={styles.setText}>
-                      {`Set ${i + 1}: ${set.reps} reps @ ${set.weight} kg`}
-                    </Text>
-                  ))}
+                  {exercise.sets.length > 0 && (
+                    exercise.sets.map((set, i) => (
+                      <Text key={i} style={styles.setText}>
+                        {`Set ${i + 1}: ${set.reps} reps @ ${set.weight} kg`}
+                      </Text>
+                    ))
+                  )}
+
+                  {/* Delete Exercise Button inside the expanded tab */}
+                  <TouchableOpacity onPress={() => deleteExercise(index)} style={styles.deleteButton}>
+                    <Ionicons name="trash-outline" size={20} color="red" />
+                    <Text style={styles.deleteText}>Delete Exercise</Text>
+                  </TouchableOpacity>
                 </View>
               )}
             </View>
@@ -177,14 +193,14 @@ const styles = StyleSheet.create({
   },
   exerciseContainer: {
     marginTop: 20,
+    backgroundColor: '#333',
+    padding: 10,
+    borderRadius: 5,
   },
   expandableHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#333',
-    padding: 15,
-    borderRadius: 5,
   },
   exerciseTitle: {
     fontSize: 16,
@@ -209,5 +225,15 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     flexGrow: 1,
     justifyContent: 'center',
+  },
+  deleteButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  deleteText: {
+    color: 'red',
+    marginLeft: 5,
+    fontSize: 16,
   },
 });
