@@ -4,7 +4,7 @@ import React from 'react';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons'; // Import Ionicons
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -49,6 +49,15 @@ export default function TabLayout() {
           title: '1RM Calculator',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'calculator' : 'calculator-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="exercises"
+        options={{
+          title: 'Exercises',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'barbell' : 'barbell-outline'} color={color} size={24} />
           ),
         }}
       />
