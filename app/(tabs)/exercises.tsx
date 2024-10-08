@@ -11,6 +11,7 @@ interface ExerciseEntry {
 interface SetEntry {
   reps: string;
   weight: string;
+  date: string;
 }
 
 export default function ExercisesScreen() {
@@ -59,7 +60,7 @@ export default function ExercisesScreen() {
   // Add a set to an exercise
   const addSet = (index: number) => {
     if (reps && weight) {
-      const newSet = { reps, weight };
+      const newSet = { reps, weight, date: new Date().toLocaleDateString() }; // Include date
       const updatedExercises = exercises.map((exercise, i) => {
         if (i === index) {
           const updatedSets = [...exercise.sets, newSet];
@@ -143,11 +144,11 @@ export default function ExercisesScreen() {
                     onSubmitEditing={() => addSet(index)} // Add set on "Done"
                   />
 
-                  {/* Display logged sets */}
+                  {/* Display logged sets with the date */}
                   {exercise.sets.length > 0 && (
-                    exercise.sets.map((set, i) => (
+                    exercise.sets.slice().reverse().map((set, i) => (
                       <Text key={i} style={styles.setText}>
-                        {`Set ${i + 1}: ${set.reps} reps @ ${set.weight} kg`}
+                        {`${set.date}: ${set.reps} reps @ ${set.weight} kg`}
                       </Text>
                     ))
                   )}
