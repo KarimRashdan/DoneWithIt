@@ -10,6 +10,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
+      initialRouteName="home"  // Set the default screen to "home"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
@@ -44,7 +45,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="onerepmax"
         options={{
-          title: 'One Rep Max',
+          title: '1RM Calculator',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'calculator' : 'calculator-outline'} color={color} />
           ),
