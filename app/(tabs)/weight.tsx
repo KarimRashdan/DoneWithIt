@@ -43,9 +43,9 @@ export default function WeightScreen() {
         date: new Date().toLocaleDateString(),
         weight: weight,
       };
-      const updatedEntries = [...weightEntries, newEntry];
-      setWeightEntries(updatedEntries);  // Add the new entry to the weight entries
-      saveWeightEntries(updatedEntries);  // Save to AsyncStorage
+      const updatedEntries = [newEntry, ...weightEntries];  // Prepend the new entry to the weight entries
+      setWeightEntries(updatedEntries);  // Update the state with the new array
+      saveWeightEntries(updatedEntries);  // Save the updated entries to AsyncStorage
       setWeight('');  // Reset input box to empty string 
       Keyboard.dismiss();
     }
@@ -95,17 +95,18 @@ export default function WeightScreen() {
           <View style={styles.expandableContent}>
             {/* Map through the weightEntries array to display each logged entry */}
             {weightEntries.length > 0 ? (
-              weightEntries.map((entry, index) => (
-                <View key={index} style={styles.entry}>
-                  <Text style={styles.entryText}>
-                    {entry.date}: {entry.weight} kg
-                  </Text>
-                  {/* Button to delete entry */}
-                  <TouchableOpacity onPress={() => deleteEntry(index)}>
-                    <Ionicons name="trash-outline" size={20} color="red" />
-                  </TouchableOpacity>
-                </View>
-              ))
+              weightEntries
+                .map((entry, index) => (
+                  <View key={index} style={styles.entry}>
+                    <Text style={styles.entryText}>
+                      {entry.date}: {entry.weight} kg
+                    </Text>
+                    {/* Button to delete entry */}
+                    <TouchableOpacity onPress={() => deleteEntry(index)}>
+                      <Ionicons name="trash-outline" size={20} color="red" />
+                    </TouchableOpacity>
+                  </View>
+                ))
             ) : (
               <Text style={styles.noEntries}>No entries yet</Text>
             )}

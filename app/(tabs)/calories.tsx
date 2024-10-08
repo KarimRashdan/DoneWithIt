@@ -60,8 +60,8 @@ export default function CaloriesScreen() {
         date: new Date().toLocaleDateString(),
         calories: calories,
       };
-      const updatedEntries = [...calorieEntries, newEntry];
-      setCalorieEntries(updatedEntries);  // Add the new entry to the calorie entries
+      const updatedEntries = [newEntry, ...calorieEntries];  // Add new entry at the top
+      setCalorieEntries(updatedEntries);  // Update the state with the new array
       saveCalorieEntries(updatedEntries);  // Save to AsyncStorage
       setCalories('');  // Reset input box to empty string 
       Keyboard.dismiss();
@@ -141,21 +141,22 @@ export default function CaloriesScreen() {
           <View style={styles.expandableContent}>
             {/* Map through the calorieEntries array to display each logged entry */}
             {calorieEntries.length > 0 ? (
-              calorieEntries.map((entry, index) => (
-                <View key={index} style={styles.entry}>
-                  <Text style={styles.entryText}>
-                    {entry.date}: {entry.calories} kcal{' '}
-                    {/* Add space and display how far from the goal */}
-                    <Text style={styles.differenceText}>
-                      ({calculateDifference(entry.calories)})
+              calorieEntries
+                .map((entry, index) => (
+                  <View key={index} style={styles.entry}>
+                    <Text style={styles.entryText}>
+                      {entry.date}: {entry.calories} kcal{' '}
+                      {/* Add space and display how far from the goal */}
+                      <Text style={styles.differenceText}>
+                        ({calculateDifference(entry.calories)})
+                      </Text>
                     </Text>
-                  </Text>
-                  {/* Button to delete entry */}
-                  <TouchableOpacity onPress={() => deleteEntry(index)}>
-                    <Ionicons name="trash-outline" size={20} color="red" />
-                  </TouchableOpacity>
-                </View>
-              ))
+                    {/* Button to delete entry */}
+                    <TouchableOpacity onPress={() => deleteEntry(index)}>
+                      <Ionicons name="trash-outline" size={20} color="red" />
+                    </TouchableOpacity>
+                  </View>
+                ))
             ) : (
               <Text style={styles.noEntries}>No entries yet</Text>
             )}
