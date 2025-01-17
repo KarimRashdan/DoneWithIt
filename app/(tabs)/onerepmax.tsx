@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform, Keyboard, ScrollView } from 'react-native';
 
 export default function OneRepMaxScreen() {
-  const [weight, setWeight] = useState<string>('');  // State for the weight lifted
-  const [reps, setReps] = useState<string>('');      // State for the number of reps
-  const [oneRepMax, setOneRepMax] = useState<string | null>(null);  // State to store the calculated 1RM
+  const [weight, setWeight] = useState<string>('');  
+  const [reps, setReps] = useState<string>('');      
+  const [oneRepMax, setOneRepMax] = useState<string | null>(null); 
 
   // Function to calculate the One Rep Max using Epley's formula
   const calculateOneRepMax = () => {
@@ -13,10 +13,10 @@ export default function OneRepMaxScreen() {
 
     if (!isNaN(weightNum) && !isNaN(repsNum) && repsNum > 0) {
       const calculated1RM: number = weightNum * (1 + repsNum / 30);
-      setOneRepMax(calculated1RM.toFixed(2));  // Set the calculated 1RM as a string with two decimal places
-      Keyboard.dismiss();  // Dismiss the keyboard after calculation
+      setOneRepMax(calculated1RM.toFixed(2));  
+      Keyboard.dismiss();  
     } else {
-      setOneRepMax(null);  // Clear the result if inputs are invalid
+      setOneRepMax(null); 
     }
   };
 
@@ -51,7 +51,6 @@ export default function OneRepMaxScreen() {
         {/* Button to calculate 1RM */}
         <Button title="Calculate 1RM" onPress={calculateOneRepMax} />
 
-        {/* Display the result */}
         {oneRepMax && (
           <Text style={styles.resultText}>
             Estimated One Rep Max: {oneRepMax} kg

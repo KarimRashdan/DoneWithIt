@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
 
 interface WeightEntry {
   date: string;
@@ -9,9 +9,9 @@ interface WeightEntry {
 }
 
 export default function WeightScreen() {
-  const [weight, setWeight] = useState('');  // State for current weight input
-  const [isExpanded, setIsExpanded] = useState(false);  // State for toggling expandable section
-  const [weightEntries, setWeightEntries] = useState<WeightEntry[]>([]);  // State to store weight entries
+  const [weight, setWeight] = useState(''); 
+  const [isExpanded, setIsExpanded] = useState(false);  
+  const [weightEntries, setWeightEntries] = useState<WeightEntry[]>([]);  
 
   // Load weight entries from AsyncStorage when the app starts
   useEffect(() => {
@@ -43,28 +43,28 @@ export default function WeightScreen() {
         date: new Date().toLocaleDateString(),
         weight: weight,
       };
-      const updatedEntries = [newEntry, ...weightEntries];  // Prepend the new entry to the weight entries
-      setWeightEntries(updatedEntries);  // Update the state with the new array
-      saveWeightEntries(updatedEntries);  // Save the updated entries to AsyncStorage
-      setWeight('');  // Reset input box to empty string 
+      const updatedEntries = [newEntry, ...weightEntries]; 
+      setWeightEntries(updatedEntries);  
+      saveWeightEntries(updatedEntries);  
+      setWeight(''); 
       Keyboard.dismiss();
     }
   };
 
   const deleteEntry = (index: number) => {
-    const updatedEntries = weightEntries.filter((_, i) => i !== index);  // Filter out the entry by index
-    setWeightEntries(updatedEntries);  // Update the state with the new array
-    saveWeightEntries(updatedEntries);  // Save the updated entries to AsyncStorage
+    const updatedEntries = weightEntries.filter((_, i) => i !== index);  
+    setWeightEntries(updatedEntries);  
+    saveWeightEntries(updatedEntries);  
   };
 
   const toggleExpand = () => {
-    setIsExpanded(!isExpanded);  // Toggle the expand/collapse state
+    setIsExpanded(!isExpanded); 
   };
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}  // Adjust the behavior based on platform
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}  
     >
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         <Text style={styles.title}>Log Your Weight</Text>
@@ -85,7 +85,7 @@ export default function WeightScreen() {
         <TouchableOpacity style={styles.expandableHeader} onPress={toggleExpand}>
           <Text style={styles.expandableTitle}>Weight History</Text>
           <Ionicons
-            name={isExpanded ? 'chevron-up-outline' : 'chevron-down-outline'}  // Toggle arrow icon
+            name={isExpanded ? 'chevron-up-outline' : 'chevron-down-outline'} 
             size={20}
             color="white"
           />

@@ -15,13 +15,13 @@ interface SetEntry {
 }
 
 export default function ExercisesScreen() {
-  const [exerciseName, setExerciseName] = useState(''); // Input for exercise name
-  const [exercises, setExercises] = useState<ExerciseEntry[]>([]); // Store exercises
-  const [isExpanded, setIsExpanded] = useState<number | null>(null); // Track which exercise is expanded
-  const [reps, setReps] = useState(''); // Reps state
-  const [weight, setWeight] = useState(''); // Weight state
+  const [exerciseName, setExerciseName] = useState(''); 
+  const [exercises, setExercises] = useState<ExerciseEntry[]>([]); 
+  const [isExpanded, setIsExpanded] = useState<number | null>(null); 
+  const [reps, setReps] = useState(''); 
+  const [weight, setWeight] = useState(''); 
 
-  // Load exercises from AsyncStorage on mount
+  // Load exercises from AsyncStorage
   useEffect(() => {
     const loadExercises = async () => {
       try {
@@ -45,7 +45,6 @@ export default function ExercisesScreen() {
     }
   };
 
-  // Add a new exercise
   const addExercise = () => {
     if (exerciseName.trim()) {
       const newExercise = { name: exerciseName, sets: [] };
@@ -53,14 +52,13 @@ export default function ExercisesScreen() {
       setExercises(updatedExercises);
       saveExercises(updatedExercises);
       setExerciseName('');
-      Keyboard.dismiss(); // Dismiss keyboard when adding exercise
+      Keyboard.dismiss();
     }
   };
 
-  // Add a set to an exercise
   const addSet = (index: number) => {
     if (reps && weight) {
-      const newSet = { reps, weight, date: new Date().toLocaleDateString() }; // Include date
+      const newSet = { reps, weight, date: new Date().toLocaleDateString() }; 
       const updatedExercises = exercises.map((exercise, i) => {
         if (i === index) {
           const updatedSets = [...exercise.sets, newSet];
@@ -72,19 +70,19 @@ export default function ExercisesScreen() {
       saveExercises(updatedExercises);
       setReps('');
       setWeight('');
-      Keyboard.dismiss(); // Dismiss keyboard when adding a set
+      Keyboard.dismiss(); 
     }
   };
 
   // Delete an exercise
   const deleteExercise = (index: number) => {
-    const updatedExercises = exercises.filter((_, i) => i !== index); // Remove exercise by index
+    const updatedExercises = exercises.filter((_, i) => i !== index); 
     setExercises(updatedExercises);
     saveExercises(updatedExercises); // Save the updated exercises list
   };
 
   const toggleExpand = (index: number) => {
-    setIsExpanded(isExpanded === index ? null : index); // Toggle expansion
+    setIsExpanded(isExpanded === index ? null : index); 
   };
 
   return (
@@ -101,8 +99,8 @@ export default function ExercisesScreen() {
           placeholder="Enter exercise name"
           value={exerciseName}
           onChangeText={setExerciseName}
-          returnKeyType="done" // "Done" button
-          onSubmitEditing={addExercise} // Add exercise on "Done"
+          returnKeyType="done" 
+          onSubmitEditing={addExercise} 
         />
         <Button title="Add Exercise" onPress={addExercise} />
 
@@ -131,7 +129,7 @@ export default function ExercisesScreen() {
                     returnKeyType="done"
                     value={reps}
                     onChangeText={setReps}
-                    onSubmitEditing={() => addSet(index)} // Add set on "Done"
+                    onSubmitEditing={() => addSet(index)} 
                   />
                   {/* Log Weight */}
                   <TextInput
@@ -141,7 +139,7 @@ export default function ExercisesScreen() {
                     returnKeyType="done"
                     value={weight}
                     onChangeText={setWeight}
-                    onSubmitEditing={() => addSet(index)} // Add set on "Done"
+                    onSubmitEditing={() => addSet(index)} 
                   />
 
                   {/* Display logged sets with the date */}
